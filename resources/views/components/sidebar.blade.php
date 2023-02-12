@@ -12,13 +12,20 @@
                 <a class="nav-link"
                     href="{{ url('dashboard-general-dashboard') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
+            <li class="{{ Request::is('modal') ? 'active' : '' }}">
+                <a class="nav-link"
+                    href="{{ route('modal.index') }}"><i class="fas fa-fire"></i><span>Modal</span></a>
+            </li>
 
             <li class="menu-header">Pemasukan Penjualan</li>
-            
-
-            <li class="{{ Request::is('buku-kas') ? 'active' : '' }}">
+             
+            <li class="{{ Request::is('penjualan') ? 'active' : '' }}">
                 <a class="nav-link"
-                    href="{{ url('buku-kas') }}"><i class="fas fa-wallet"></i> <span>Buku Kas</span></a>
+                    href="{{ route('penjualan.index') }}"><i class="fas fa-wallet"></i> <span>Penjualan</span></a>
+            </li>
+            <li class="{{ Request::is('non-tunai') ? 'active' : '' }}">
+                <a class="nav-link"
+                    href="{{ route('non-tunai.index') }}"><i class="fas fa-wallet"></i> <span>Non Tunai</span></a>
             </li>
 
             <li class="{{ Request::is('blank-page') ? 'active' : '' }}">

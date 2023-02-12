@@ -14,7 +14,7 @@
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div>
-                    <div class="breadcrumb-item">Tambah Pemasukan Harian</div>
+                    <div class="breadcrumb-item">Tambah Pemasukan Harian EDIT</div>
                 </div>
             </div>
 
@@ -26,53 +26,57 @@
                             <div class="card-header">
                                 <h4>Buat Data Pemasukan Baru</h4>
                             </div>
+                            <form action="{{route('penjualan.update', $data->id)}}" method="post">
+                                @csrf
+                                @method("PUT")
                             <div class="card-body">
                                 <div class="form-group row">
                                     <label for="tanggal" class="col-sm-3 col-form-label">Tanggal</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="form-control" id="tanggal" name="tanggal">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="distributir_name" class="col-sm-3 col-form-label">Nama Distributor</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="distributir_name" name="distributir_name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="harga" class="col-sm-3 col-form-label">Harga</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="harga" name="harga">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="type_bayar" class="col-sm-3 col-form-label">Type Pembayaran</label>
-                                    <div class="col-sm-9">
-                                        <select name="type_bayar" id="type_bayar" class="form-control">
-                                            <option value="1">Cash</option>
-                                            <option value="kredit">Kredit (If Credit Tambahkan Form Jumlah Bayar Awal)</option>
-                                        </select>
+                                        <input type="hidden" value="{{$data->id}}">
+                                        <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{$data->tanggal}}" required>
                                     </div>
                                 </div>
 
-                                <div class="form-group row paid_kredit">
-                                    <label for="harga" class="col-sm-3 col-form-label">Total Bayar Awal</label>
+                                <div class="form-group row">
+                                    <label for="penjualan" class="col-sm-3 col-form-label">Penjualan</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="paid_kredit" name="paid_kredit">
+                                        <input type="number" class="form-control uang" value="{{$data->nominal_penjualan}}" id="penjualan" name="nominal_penjualan" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="keterangan" class="col-sm-3 col-form-label">Keterangan</label>
+                                    <label for="laba_rugi" class="col-sm-3 col-form-label">Laba Rugi</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" data-height="150" placeholder="(Opsional)"></textarea>
+                                        <input type="number" class="form-control uang" value="{{$data->nominal_laba_rugi}}" id="laba_rugi" name="nominal_laba_rugi" required>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label for="modal_kasir" class="col-sm-3 col-form-label">Modal Kasir</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" class="form-control uang" id="modal_kasir" value="{{$data->nominal_modal_kasir}}" name="nominal_modal_kasir" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="kembalian_konsumen" class="col-sm-3 col-form-label">Kembalian Konsumen</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" class="form-control uang" id="kembalian_konsumen" value="{{$data->nominal_kembalian_konsumen}}" name="nominal_kembalian_konsumen">
+                                    </div>
+                                </div>
+
+                                {{-- <div class="form-group row">
+                                    <label for="keterangan" class="col-sm-3 col-form-label">Keterangan</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" data-height="150" placeholder="(Opsional)" name="keterangan"></textarea>
+                                    </div>
+                                </div> --}}
                                 
                             </div>
                             <div class="card-footer">
                                 <button class="btn btn-primary mr-1" type="submit">Submit</button>
                                 <button class="btn btn-secondary" type="reset">Reset</button>
                             </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -83,17 +87,14 @@
 
 @push('scripts')
     <!-- JS Libraies -->
+    <script type="text/javascript">
+        $(document).ready(function(){
 
-    <script>
-        $(document).('change', '#type_bayar', function(){
-            var type_bayar = $(this).val();
+            // Format mata uang.
+            $( '.uang' ).mask('000.000.000', {reverse: true});
 
-            if (type_bayar == 'kredit') {
-                $('.paid_kredit').show();
-            }else{
-                $('.paid_kredit').hide();
-            }
-        });
+        })
     </script>
+
     <!-- Page Specific JS File -->
 @endpush

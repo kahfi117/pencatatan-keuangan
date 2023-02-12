@@ -16,7 +16,7 @@ class PenjualanController extends Controller
     {
         $data = Penjualan::all();
 
-        return view();
+        return view('contents.penjualan.index', compact('data'));
     }
 
     /**
@@ -26,7 +26,7 @@ class PenjualanController extends Controller
      */
     public function create()
     {
-        //
+        return view('contents.penjualan.add');
     }
 
     /**
@@ -37,7 +37,29 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $kembalian_konsumen = $request->nominal_kembalian_konsumen;
+        if($kembalian_konsumen == ''){
+            Penjualan::create([
+                'tanggal' => $request->tanggal,
+                'nominal_penjualan' => $request->nominal_penjualan,
+                'nominal_laba_rugi' => $request->nominal_laba_rugi,
+                'nominal_modal_kasir' => $request->nominal_modal_kasir,
+                'nominal_kembalian_konsumen' => 0,
+            ]);
+        }
+        else{
+            Penjualan::create([
+                'tanggal' => $request->tanggal,
+                'nominal_penjualan' => $request->nominal_penjualan,
+                'nominal_laba_rugi' => $request->nominal_laba_rugi,
+                'nominal_modal_kasir' => $request->nominal_modal_kasir,
+                'nominal_kembalian_konsumen' => $kembalian_konsumen,
+            ]);
+        }
+        
+        
+        return redirect()->route('penjualan.index');
     }
 
     /**
@@ -48,7 +70,7 @@ class PenjualanController extends Controller
      */
     public function show(Penjualan $penjualan)
     {
-        //
+        
     }
 
     /**
@@ -57,9 +79,12 @@ class PenjualanController extends Controller
      * @param  \App\Models\Penjualan  $penjualan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Penjualan $penjualan)
+    public function edit($id)
     {
-        //
+        $data = Penjualan::findOrFail($id);
+
+        return view('contents.penjualan.edit', compact('data'));
+        
     }
 
     /**
@@ -69,9 +94,33 @@ class PenjualanController extends Controller
      * @param  \App\Models\Penjualan  $penjualan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Penjualan $penjualan)
+    public function update(Request $request, $id)
     {
-        //
+
+        // $id = $request->id;
+
+        $kembalian_konsumen = $request->nominal_kembalian_konsumen;
+        if($kembalian_konsumen == ''){
+            Penjualan::findOrFail($id)->update([
+                'tanggal' => $request->tanggal,
+                'nominal_penjualan' => $request->nominal_penjualan,
+                'nominal_laba_rugi' => $request->nominal_laba_rugi,
+                'nominal_modal_kasir' => $request->nominal_modal_kasir,
+                'nominal_kembalian_konsumen' => 0,
+            ]);
+        }
+        else{
+            Penjualan::findOrFail($id)->update([
+                'tanggal' => $request->tanggal,
+                'nominal_penjualan' => $request->nominal_penjualan,
+                'nominal_laba_rugi' => $request->nominal_laba_rugi,
+                'nominal_modal_kasir' => $request->nominal_modal_kasir,
+                'nominal_kembalian_konsumen' => $kembalian_konsumen,
+            ]);
+        }
+        
+        
+        return redirect()->route('penjualan.index');
     }
 
     /**
@@ -80,8 +129,28 @@ class PenjualanController extends Controller
      * @param  \App\Models\Penjualan  $penjualan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Penjualan $penjualan)
+    public function destroy($id)
     {
-        //
+        $data = Penjualan::findOrFail($id);
+        $data->delete();
+        
+        return redirect()->back();
+    }
+
+    public function buatLaporan(Request $request){
+        $start = $request->tanggal_mulai;
+        $end = $request->tanggal_selesai;
+
+        $allData = Penjualan::whereBetween('tanggal',[$start,$end])->orderBy('tanggal', 'ASC')->get();
+        
+        foreach($allData as $item){
+
+            $jml[] = $item->nominal_penjualan - $item->nominal_laba_rugi + $item->nominal_modal_kasir - $item->nominal_kembalian_konsumen;
+        }
+
+        $jumlah = array_sum($jml);
+
+        // dd($start, $end);
+        return view('pdf.datapenjualan', compact('allData', 'start', 'end', 'jumlah'));
     }
 }

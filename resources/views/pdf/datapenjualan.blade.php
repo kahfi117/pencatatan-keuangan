@@ -35,10 +35,14 @@
                             <div class="card-header">
                                 
                                     <div class="col-12 col-md-6 col-lg-6">
-                                        <h4>Data Pemasukan</h4>
+                                        <h4>Laporan Penjualan Tanggal {{$start}} - {{$end}}</h4>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 text-right">
-                                        <a class="btn btn-primary" href="{{route('buku-kas.create')}}">Tambah Data Pemasukan</a>
+                                        <div class="d-print-none">
+                                            <div class="float-end">
+                                                <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 
                             </div>
@@ -51,43 +55,57 @@
                                                 <th class="text-center">
                                                     No
                                                 </th>
-                                                <th>Tanggal</th>
-                                                @foreach ($sumber_pemasukan as $sp)
-                                                    <th>
-                                                        {{$sp->nama}}
-                                                    </th>
-                                                @endforeach
-                                                <th>
+                                                <th class="text-right">Tanggal</th>
+                                                <th class="text-right">Penjualan</th>
+                                                <th class="text-right">Laba Rugi</th>
+                                                <th class="text-right">Modal Kasir</th>
+                                                <th class="text-right">Kembalian Konsumen</th>
+                                                <th class="text-right">
                                                     Total
                                                 </th>
-                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         @php
                                             $no = 1;
                                         @endphp
                                         <tbody>
-                                            @foreach ($buku_kas as $bks)
+                                            @forelse ($allData as $item)
+                                            @php
                                                 
+                                                $total = $item->nominal_penjualan - $item->nominal_laba_rugi + $item->nominal_modal_kasir - $item->nominal_kembalian_konsumen
+                                            @endphp
                                             <tr>
                                                 <td>
                                                     {{$no++}} 
                                                 </td>
                                                 <td>{{date('d F Y',strtotime($item->tanggal))}}</td>
-                                                @foreach ($bks->buku_kas_detailss as $bk)
                                                 <td class="text-right">
-                                                    Rp. {{number_format($bk->nominal, 2,',','.')}}
+                                                    Rp.{{ number_format($item->nominal_penjualan, 2,',','.')}}
                                                 </td>
-                                                @endforeach
                                                 <td class="text-right">
-                                                    Rp. {{$bk->buku_kas_details ?? 0}}
+                                                    Rp.{{number_format($item->nominal_laba_rugi, 2,',','.')}}
                                                 </td>
-                                                <td>
-                                                    <a class="btn btn-primary" href="">Edit</a>
-                                                    <a class="btn btn-danger" href="">Hapus</a>
+                                                <td class="text-right">
+                                                    Rp.{{number_format($item->nominal_modal_kasir, 2,',','.')}}
+                                                </td>
+                                                <td class="text-right">
+                                                    Rp.{{number_format($item->nominal_kembalian_konsumen, 2,',','.')}}
+                                                </td>
+
+                                                <td class="text-right">
+                                                   Rp.{{number_format($total, 2,',','.')}}
                                                 </td>
                                             </tr>
-                                            @endforeach
+
+                                            @empty
+                                                <tr>
+                                                    <td colspan="8" class="text-center">NO DATA</td>
+                                                </tr>
+                                            @endforelse
+                                            <tr>
+                                                <th colspan="6">TOTAL</th>
+                                                <th class="text-right">Rp.{{number_format($jumlah, 2,',','.')}}</th>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

@@ -38,7 +38,8 @@
                                         <h4>Data Pemasukan</h4>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 text-right">
-                                        <a class="btn btn-primary" href="{{route('buku-kas.create')}}">Tambah Data Pemasukan</a>
+                                        <a class="btn btn-primary text-center" href="{{route('penjualan.create')}}">Tambah Data Penjualan</a>
+                                        <button class="btn btn-secondary text-center" type="button" data-toggle="modal" data-target="#modal_laporan">Buat Laporan</button>
                                     </div>
                                 
                             </div>
@@ -52,11 +53,10 @@
                                                     No
                                                 </th>
                                                 <th>Tanggal</th>
-                                                @foreach ($sumber_pemasukan as $sp)
-                                                    <th>
-                                                        {{$sp->nama}}
-                                                    </th>
-                                                @endforeach
+                                                <th>Penjualan</th>
+                                                <th>Laba Rugi</th>
+                                                <th>Modal Kasir</th>
+                                                <th>Kembalian Konsumen</th>
                                                 <th>
                                                     Total
                                                 </th>
@@ -67,27 +67,40 @@
                                             $no = 1;
                                         @endphp
                                         <tbody>
-                                            @foreach ($buku_kas as $bks)
+                                            @forelse ($data as $item)
                                                 
                                             <tr>
                                                 <td>
                                                     {{$no++}} 
                                                 </td>
-                                                <td>{{$bks->tanggal}}</td>
-                                                @foreach ($bks->buku_kas_detailss as $bk)
+                                                <td>{{date('d F Y',strtotime($item->tanggal))}}</td>
                                                 <td class="text-right">
-                                                    Rp. {{number_format($bk->nominal, 2,',','.')}}
+                                                    Rp.{{ number_format($item->nominal_penjualan, 2,',','.')}}
                                                 </td>
-                                                @endforeach
                                                 <td class="text-right">
-                                                    Rp. 0.000.000,00
+                                                    Rp.{{number_format($item->nominal_laba_rugi, 2,',','.')}}
+                                                </td>
+                                                <td class="text-right">
+                                                    Rp.{{number_format($item->nominal_modal_kasir, 2,',','.')}}
+                                                </td>
+                                                <td class="text-right">
+                                                    Rp.{{number_format($item->nominal_kembalian_konsumen, 2,',','.')}}
+                                                </td>
+
+                                                <td class="text-right">
+                                                   Rp.{{number_format($item->nominal_penjualan - $item->nominal_laba_rugi + $item->nominal_modal_kasir - $item->nominal_kembalian_konsumen, 2,',','.')}}
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-primary" href="">Edit</a>
-                                                    <a class="btn btn-danger" href="">Hapus</a>
+                                                    <a class="btn btn-primary" href="{{route('penjualan.edit', $item->id)}}">Edit</a>
+                                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#modalDelete_{{$item->id}}">Hapus</button>
                                                 </td>
                                             </tr>
-                                            @endforeach
+
+                                            @empty
+                                                <tr>
+                                                    <td colspan="8" class="text-center">NO DATA</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
@@ -97,6 +110,7 @@
                 </div>
             </div>
         </section>
+        @include('contents.penjualan.modal')
     </div>
 @endsection
 

@@ -9,6 +9,8 @@ use App\Http\Controllers\GajiKaryawanController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\ListingFeeController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\SumberNonCashController;
+use App\Http\Controllers\ModalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +64,14 @@ Route::resource('sewa-tenant', TenantController::class);
 Route::resource('listing-fee', ListingFeeController::class);
 
 // Penjualan
+Route::get('penjualan/laporan', [PenjualanController::class, 'buatLaporan'])->name('penjualan.buatLaporan');
 Route::resource('penjualan', PenjualanController::class);
+
+// Non Tunai
+Route::resource('non-tunai', SumberNonCashController::class);
+
+// Modal
+Route::resource('modal', ModalController::class);
 
 
 

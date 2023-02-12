@@ -112,7 +112,7 @@
                                                 <td>
                                                     {{$no++}}
                                                 </td>
-                                                <td>{{$item->tanggal}}</td>
+                                                <td>{{date('d F Y',strtotime($item->tanggal))}}</td>
                                                 <td>{{$item->item}}</td>
                                                 <td>Rp. {{number_format($item->nominal,2,',','.')}}</td>
                                                 <td>
