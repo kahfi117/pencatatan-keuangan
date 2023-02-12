@@ -21,26 +21,51 @@ class ModalController extends Controller
      */
     public function index()
     {
-        $sb = SumberNonCash::select(DB::raw('SUM(nominal_bni) as `bni`, SUM(nominal_mandiri) as `mandiri`'),   
+        $sb = SumberNonCash::select(DB::raw('SUM(nominal_bni) as `bni`, SUM(nominal_mandiri) as `mandiri`'),
                                     DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))
                                     ->groupby('year','month')
+                                    ->orderBy('year','ASC')
+                                    ->orderBy('month','ASC')
                                     ->get();
-        
+
         $penjualan = Penjualan::select(DB::raw('SUM(nominal_penjualan) as penjualan, SUM(nominal_laba_rugi) as laba, SUM(nominal_modal_kasir) as kasir, SUM(nominal_kembalian_konsumen) as konsumen'),
                                         DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))
                                         ->groupby('year', 'month')
+                                        ->orderBy('month','ASC')
+                                        ->orderBy('year','ASC')
                                         ->get();
-        
+
                                         // dd($penjualan);
-                                        
-        $tenant = Tenant::all();
-        $fee = ListingFee::all();
+
+        $tenant = Tenant::select(DB::raw('SUM(nominal) as nominal'),
+                                    DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))
+                                    ->groupby('year','month')
+                                    ->orderBy('year','ASC')
+                                    ->orderBy('month','ASC')
+                                    ->get();
+
+        $fee = ListingFee::select(DB::raw('SUM(nominal) as nominal'),
+                                    DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))
+                                    ->groupby('year','month')
+                                    ->orderBy('year','ASC')
+                                    ->orderBy('month','ASC')
+                                    ->get();
 
 
-        $gaji = GajiKaryawan::all();
-        $operasional = Operasional::all();
+        $gaji = GajiKaryawan::select(DB::raw('SUM(nominal) as nominal'),
+                                        DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))
+                                        ->groupby('year','month')
+                                        ->orderBy('year','ASC')
+                                        ->orderBy('month','ASC')
+                                        ->get();
 
-        
+        $operasional = Operasional::select(DB::raw('SUM(nominal) as nominal'),
+                                            DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))
+                                            ->groupby('year','month')
+                                            ->orderBy('year','ASC')
+                                            ->orderBy('month','ASC')
+                                            ->get();
+
         foreach($sb as $sumber){
             $cek[] = $sumber->mandiri + $sumber->bni;
         }
@@ -82,11 +107,22 @@ class ModalController extends Controller
 
 
         $total = $kas_masuk - $kas_keluar;
-        
 
-        
-        
-        return view('contents.modal.index', compact('kas_masuk','kas_keluar', 'total', 'sb', 'penjualan'));
+        return view('contents.modal.index', compact('kas_masuk',
+                                                    'kas_keluar',
+                                                    'total',
+                                                    'sb',
+                                                    'penjualan',
+                                                    'tenant',
+                                                    'gaji',
+                                                    'operasional',
+                                                    'jumlah_penj',
+                                                    'jumlah_cek',
+                                                    'jumlah_fee',
+                                                    'jumlah_tenant',
+                                                    'jumlah_gaji',
+                                                    'jumlah_operasional',
+                                                    'fee'));
     }
 
     /**

@@ -26,53 +26,50 @@
                             <div class="card-header">
                                 <h4>Buat Data Pemasukan Baru</h4>
                             </div>
+                            <form action="{{route('bm.store')}}" method="post">
+                            @csrf
                             <div class="card-body">
                                 <div class="form-group row">
                                     <label for="tanggal" class="col-sm-3 col-form-label">Tanggal</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="form-control" id="tanggal" name="tanggal">
+                                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="distributir_name" class="col-sm-3 col-form-label">Nama Distributor</label>
+                                    <label for="nama_distributor" class="col-sm-3 col-form-label">Nama Distributor</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="distributir_name" name="distributir_name">
+                                        <input type="text" class="form-control" id="nama_distributor" name="nama_distributor" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="harga" class="col-sm-3 col-form-label">Harga</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="harga" name="harga">
+                                        <input type="number" class="form-control" id="harga" name="harga" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="type_bayar" class="col-sm-3 col-form-label">Type Pembayaran</label>
+                                    <label for="status" class="col-sm-3 col-form-label">Type Pembayaran</label>
                                     <div class="col-sm-9">
-                                        <select name="type_bayar" id="type_bayar" class="form-control">
-                                            <option value="1">Cash</option>
-                                            <option value="kredit">Kredit (If Credit Tambahkan Form Jumlah Bayar Awal)</option>
+                                        <select name="status" id="status" class="form-control" required>
+                                            <option value="Lunas">Cash</option>
+                                            <option value="On Kredit">Kredit (If Credit Tambahkan Form Jumlah Bayar Awal)</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group row paid_kredit">
-                                    <label for="harga" class="col-sm-3 col-form-label">Total Bayar Awal</label>
+                                    <label for="nominal_kredit" class="col-sm-3 col-form-label">Total Bayar Awal</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="paid_kredit" name="paid_kredit">
+                                        <input type="number" class="form-control" id="nominal_kredit" name="nominal_kredit">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="keterangan" class="col-sm-3 col-form-label">Keterangan</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" data-height="150" placeholder="(Opsional)"></textarea>
-                                    </div>
-                                </div>
-                                
+
                             </div>
                             <div class="card-footer">
                                 <button class="btn btn-primary mr-1" type="submit">Submit</button>
                                 <button class="btn btn-secondary" type="reset">Reset</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>

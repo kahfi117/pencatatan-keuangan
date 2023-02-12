@@ -8,18 +8,18 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class="{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}">
+            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
                 <a class="nav-link"
-                    href="{{ url('dashboard-general-dashboard') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                    href="{{ route('dashboard') }}"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
-            <li class="{{ Request::is('modal') ? 'active' : '' }}">
+            <li class="{{ Request::is('modal*') ? 'active' : '' }}">
                 <a class="nav-link"
                     href="{{ route('modal.index') }}"><i class="fas fa-fire"></i><span>Modal</span></a>
             </li>
 
             <li class="menu-header">Pemasukan Penjualan</li>
-             
-            <li class="{{ Request::is('penjualan') ? 'active' : '' }}">
+
+            <li class="{{ Request::is('penjualan*') ? 'active' : '' }}">
                 <a class="nav-link"
                     href="{{ route('penjualan.index') }}"><i class="fas fa-wallet"></i> <span>Penjualan</span></a>
             </li>
@@ -28,10 +28,10 @@
                     href="{{ route('non-tunai.index') }}"><i class="fas fa-wallet"></i> <span>Non Tunai</span></a>
             </li>
 
-            <li class="{{ Request::is('blank-page') ? 'active' : '' }}">
+            {{-- <li class="{{ Request::is('blank-page') ? 'active' : '' }}">
                 <a class="nav-link"
                     href="{{ url('blank-page') }}"><i class="far fa-square"></i> <span>History Transaksi</span></a>
-            </li>
+            </li> --}}
 
             <li class="menu-header">Barang</li>
             <li class="{{ Request::is('barang-masuk*') ? 'active' : '' }}">
@@ -68,20 +68,20 @@
                     </i> <span>Listing Fee</span>
                 </a>
             </li>
-            <li class="{{ Request::is('features-tickets') ? 'active' : '' }}">
+            {{-- <li class="{{ Request::is('features-tickets') ? 'active' : '' }}">
                 <a class="nav-link"
                     href="{{ url('features-tickets') }}"><i class="fas fa-pencil-ruler">
                     </i> <span>Modal</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="menu-header">Master Data</li>
+            {{-- <li class="menu-header">Master Data</li>
             <li class="{{Request::is('sumber-pemasukan') ? 'active' : ''}}">
                 <a class="nav-link"
                     href="{{ url('sumber-pemasukan') }}"><i class="fas fa-pencil-ruler">
                     </i> <span>Sumber Pemasukan</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
 
     </aside>

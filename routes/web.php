@@ -11,6 +11,7 @@ use App\Http\Controllers\ListingFeeController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\SumberNonCashController;
 use App\Http\Controllers\ModalController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,17 +24,10 @@ use App\Http\Controllers\ModalController;
 |
 */
 
-Route::redirect('/', '/dashboard-general-dashboard');
 
-// Dashboard
-Route::get('/dashboard-general-dashboard', function () {
-    return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
-});
-Route::get('/dashboard-ecommerce-dashboard', function () {
-    return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
-});
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-// Buku Kas 
+// Buku Kas
 Route::resource('buku-kas', BukuKasController::class);
 
 // Sumber Pemasukan
@@ -41,12 +35,12 @@ Route::resource('sumber-pemasukan', SumberPemasukanController::class);
 
 // Data Barang Masuk
 Route::controller(BarangMasukController::class)->group(function () {
-    Route::get('/barang-masuk/all', 'index')->name('bm.index'); 
+    Route::get('/barang-masuk/all', 'index')->name('bm.index');
     Route::get('/barang-masuk/create', 'create')->name('bm.create');
+    Route::post('/barang-masuk/store', 'store')->name('bm.store');
 
     Route::get('/barang-kredit/all', 'barangKredit')->name('bmk.index');
-    // Route::post('/supplier/store', 'SupplierStore')->name('supplier.store');
-    // Route::get('/supplier/edit/{id}', 'SupplierEdit')->name('supplier.edit'); 
+    // Route::get('/supplier/edit/{id}', 'SupplierEdit')->name('supplier.edit');
     // Route::post('/supplier/update', 'SupplierUpdate')->name('supplier.update');
     // Route::get('/supplier/delete/{id}', 'SupplierDelete')->name('supplier.delete');
     });

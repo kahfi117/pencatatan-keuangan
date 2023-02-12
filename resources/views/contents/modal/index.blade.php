@@ -81,90 +81,344 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Data Kas Masuk</h4>
+                                <h2 style="color:#6777ef">DATA KAS MASUK</h2>
                             </div>
-                            
+
                             <div class="card-body">
-                                <div class="col-6">
-                                    <h5>Data Penjualan Perbulan</h5><br>
-                                <div class="table-responsive">
-                                    <table class="table-striped table" id="table-2">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">
-                                                    No
-                                                </th>
-                                                <th>Bulan</th>
-                                                <th>Nominal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>Date</td>
-                                                <td>
-                                                    R
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <h5>Data Penjualan Bulanan</h5><br>
+                                        <div class="table-responsive">
+                                            <table class="table-striped table" id="table-2">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $no = 1;
+                                                @endphp
+                                                <tbody>
+                                                @foreach ($penjualan as $pj)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{$no++}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{$pj->month}}-{{$pj->year}}
+                                                    </td>
+                                                    <td class="text-right">Rp.{{number_format($pj->penjualan - $pj->laba + $pj->kasir - $pj->konsumen, 2,',','.')}}</td>
+                                                </tr>
+                                                @endforeach
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Total
+                                                        </b>
+                                                    </td>
+                                                    <td colspan="2" class="text-right">
+                                                    Rp.{{number_format($jumlah_penj,2,',','.')}}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <h5>Data Sumber Non Cash</h5><br>
+                                        <div class="table-responsive">
+                                            <table class="table-striped table" id="table-3">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $no = 1;
+                                                @endphp
+                                                <tbody>
+                                                @foreach ($sb as $sumber)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{$no++}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{$sumber->month}}-{{$sumber->year}}
+                                                    </td>
+                                                    <td class="text-right">Rp.{{number_format($sumber->mandiri + $sumber->bni, 2,',','.')}}</td>
+                                                </tr>
+                                                @endforeach
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Total
+                                                        </b>
+                                                    </td>
+                                                    <td colspan="2" class="text-right">
+                                                    Rp.{{number_format($jumlah_cek,2,',','.')}}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <h5>Data Listing Fee</h5><br>
+                                        <div class="table-responsive">
+                                            <table class="table-striped table" id="table-3">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $no = 1;
+                                                @endphp
+                                                <tbody>
+                                                @foreach ($fee as $f)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{$no++}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{$f->month}}-{{$f->year}}
+                                                    </td>
+                                                    <td class="text-right">Rp.{{number_format($f->nominal, 2,',','.')}}</td>
+                                                </tr>
+                                                @endforeach
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Total
+                                                        </b>
+                                                    </td>
+                                                    <td colspan="2" class="text-right">
+                                                    Rp.{{number_format($jumlah_fee,2,',','.')}}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <h5>Data Sewa Tenant</h5><br>
+                                        <div class="table-responsive">
+                                            <table class="table-striped table" id="table-3">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $no = 1;
+                                                @endphp
+                                                <tbody>
+                                                @foreach ($tenant as $tn)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{$no++}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{$tn->month}}-{{$tn->year}}
+                                                    </td>
+                                                    <td class="text-right">Rp.{{number_format($tn->nominal, 2,',','.')}}</td>
+                                                </tr>
+                                                @endforeach
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Total
+                                                        </b>
+                                                    </td>
+                                                    <td colspan="2" class="text-right">
+                                                    Rp.{{number_format($jumlah_tenant,2,',','.')}}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                    </div>
                                 </div>
 
-                                </div>
-                                
+
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Data Pembelian Barang Masuk</h4>
+                                <h2 style="color:#6777ef">DATA KAS KELUAR</h2>
                             </div>
-                            
+
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table-striped table" id="table-1">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">
-                                                    No
-                                                </th>
-                                                <th>Tanggal</th>
-                                                <th>Distributor</th>
-                                                <th>Nominal</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>Date</td>
-                                                <td>
-                                                    Nama Distributor
-                                                </td>
-                                                <td>Rp. 000.000,00</td>
-                                                <td>
-                                                    <div class="badge badge-success">Lunas</div>
-                                                    <div class="badge badge-warning">On Kredit</div>
-                                                </td>
-                                                <td>
-                                                    {{-- <a href="#" class="btn btn-secondary">Detail</a> --}}
-                                                    <a href="#" class="btn btn-info">Update</a>
-                                                    <a href="#" class="btn btn-danger">Hapus</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <h5>Data Gaji Karyawan</h5><br>
+                                        <div class="table-responsive">
+                                            <table class="table-striped table" id="table-2">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $no = 1;
+                                                @endphp
+                                                <tbody>
+                                                @foreach ($gaji as $gj)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{$no++}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{$gj->month}}-{{$gj->year}}
+                                                    </td>
+                                                    <td class="text-right">Rp.{{number_format($gj->nominal, 2,',','.')}}</td>
+                                                </tr>
+                                                @endforeach
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Total
+                                                        </b>
+                                                    </td>
+                                                    <td colspan="2" class="text-right">
+                                                    Rp.{{number_format($jumlah_gaji,2,',','.')}}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <h5>Data Operasional</h5><br>
+                                        <div class="table-responsive">
+                                            <table class="table-striped table" id="table-3">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $no = 1;
+                                                @endphp
+                                                <tbody>
+                                                @foreach ($operasional as $op)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{$no++}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{$op->month}}-{{$op->year}}
+                                                    </td>
+                                                    <td class="text-right">Rp.{{number_format($op->nominal, 2,',','.')}}</td>
+                                                </tr>
+                                                @endforeach
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            Total
+                                                        </b>
+                                                    </td>
+                                                    <td colspan="2" class="text-right">
+                                                    Rp.{{number_format($jumlah_operasional,2,',','.')}}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            No
+                                                        </th>
+                                                        <th class="text-right">Bulan</th>
+                                                        <th class="text-right">Nominal</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                    </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </section>

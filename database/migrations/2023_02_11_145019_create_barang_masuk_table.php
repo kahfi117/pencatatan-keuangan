@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('tanggal');
             $table->string('nama_distributor');
+            $table->string('status');
             $table->double('nominal_cash')->default(0);
             $table->double('nominal_kredit')->default(0);
             $table->timestamps();

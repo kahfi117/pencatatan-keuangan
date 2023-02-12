@@ -77,53 +77,64 @@
                     </div>
                 </div> --}}
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="col-12 col-md-12 col-lg-12">
-                                    <h4>Data Pembelian Barang Masuk Dalam Utang</h4>
-                                </div>
-                            </div>
-                            
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table-striped table" id="table-1">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">
-                                                    No
-                                                </th>
-                                                <th>Tanggal</th>
-                                                <th>Distributor</th>
-                                                <th>Nominal</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>Date</td>
-                                                <td>
-                                                    Nama Distributor
-                                                </td>
-                                                <td>Rp. 000.000,00</td>
-                                                <td>
-                                                    <div class="badge badge-success">Lunas</div>
-                                                    <div class="badge badge-warning">On Kredit</div>
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="btn btn-info">Update</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        No
+                                    </th>
+                                    <th>Tanggal</th>
+                                    <th>Distributor</th>
+                                    <th>Total Terbayar</th>
+                                    <th>Total Utang</th>
+                                    <th>Harga</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            @php
+                            $no=1;
+                            @endphp
+                            <tbody>
+                            @forelse ($data as $item)
+                            <tr>
+                                <td>
+                                    {{$no++}}
+                                </td>
+                                <td>{{$item->tanggal}}</td>
+                                <td>
+                                    {{$item->nama_distributor}}
+                                </td>
+                                <td>Rp. {{number_format($item->nominal_cash,2,',','.')}}</td>
+                                <td>Rp. {{number_format($item->nominal_kredit,2,',','.')}}</td>
+                                <td>Rp. {{number_format($item->harga,2,',','.')}}</td>
+                                @if ($item->status == 'Lunas')
+                                <td>
+                                    <div class="badge badge-success">Lunas</div>
+                                </td>
+                                @else
+                                <td>
+                                    <div class="badge badge-warning">On Kredit</div>
+                                </td>
+                                @endif
+                                <td>
+                                    {{-- <a href="#" class="btn btn-secondary">Detail</a> --}}
+                                    <a href="#" class="btn btn-info">Update</a>
+                                    <a href="#" class="btn btn-danger">Hapus</a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    NO DATA
+                                </td>
+                            </tr>
+                            @endforelse
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

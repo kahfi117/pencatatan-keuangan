@@ -87,7 +87,7 @@
                                     <a class="btn btn-primary" href="{{route('bm.create')}}">Tambah Data</a>
                                 </div>
                             </div>
-                            
+
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table-striped table" id="table-1">
@@ -98,31 +98,48 @@
                                                 </th>
                                                 <th>Tanggal</th>
                                                 <th>Distributor</th>
-                                                <th>Nominal</th>
+                                                <th>Harga</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
+                                        @php
+                                        $no=1;
+                                        @endphp
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>Date</td>
-                                                <td>
-                                                    Nama Distributor
-                                                </td>
-                                                <td>Rp. 000.000,00</td>
-                                                <td>
-                                                    <div class="badge badge-success">Lunas</div>
-                                                    <div class="badge badge-warning">On Kredit</div>
-                                                </td>
-                                                <td>
-                                                    {{-- <a href="#" class="btn btn-secondary">Detail</a> --}}
-                                                    <a href="#" class="btn btn-info">Update</a>
-                                                    <a href="#" class="btn btn-danger">Hapus</a>
-                                                </td>
-                                            </tr>
+                                        @forelse ($data as $item)
+                                        <tr>
+                                            <td>
+                                                {{$no++}}
+                                            </td>
+                                            <td>{{$item->tanggal}}</td>
+                                            <td>
+                                                {{$item->nama_distributor}}
+                                            </td>
+                                            <td>Rp. {{number_format($item->harga)}}</td>
+                                            @if ($item->status == 'Lunas')
+                                            <td>
+                                                <div class="badge badge-success">Lunas</div>
+                                            </td>
+                                            @else
+                                            <td>
+                                                <div class="badge badge-warning">On Kredit</div>
+                                            </td>
+                                            @endif
+                                            <td>
+                                                {{-- <a href="#" class="btn btn-secondary">Detail</a> --}}
+                                                <a href="#" class="btn btn-info">Update</a>
+                                                <a href="#" class="btn btn-danger">Hapus</a>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="6" class="text-center">
+                                                NO DATA
+                                            </td>
+                                        </tr>
+                                        @endforelse
+
                                         </tbody>
                                     </table>
                                 </div>
