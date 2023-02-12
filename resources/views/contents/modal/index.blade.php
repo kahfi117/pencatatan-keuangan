@@ -37,10 +37,10 @@
                             </div>
                             <div class="card-wrap">
                                 <div class="card-header">
-                                    <h4>Total Transaksi</h4>
+                                    <h4>Jumlah Kas</h4>
                                 </div>
                                 <div class="card-body">
-                                    10
+                                    Rp. {{number_format($total,2,',','.')}}
                                 </div>
                             </div>
                         </div>
@@ -52,10 +52,10 @@
                             </div>
                             <div class="card-wrap">
                                 <div class="card-header">
-                                    <h4>Transaksi Selesai</h4>
+                                    <h4>Kas Masuk</h4>
                                 </div>
                                 <div class="card-body">
-                                    1,201
+                                    Rp. {{number_format($kas_masuk,2,',','.')}}
                                 </div>
                             </div>
                         </div>
@@ -67,25 +67,60 @@
                             </div>
                             <div class="card-wrap">
                                 <div class="card-header">
-                                    <h4>Transaksi Berlangsung</h4>
+                                    <h4>Kas Keluar</h4>
                                 </div>
                                 <div class="card-body">
-                                    47
+                                    Rp. {{number_format($kas_keluar,2,',','.')}}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <div class="col-12 col-md-6 col-lg-6">
-                                    <h4>Data Pembelian Barang Masuk</h4>
+                                <h4>Data Kas Masuk</h4>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="col-6">
+                                    <h5>Data Penjualan Perbulan</h5><br>
+                                <div class="table-responsive">
+                                    <table class="table-striped table" id="table-2">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">
+                                                    No
+                                                </th>
+                                                <th>Bulan</th>
+                                                <th>Nominal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    1
+                                                </td>
+                                                <td>Date</td>
+                                                <td>
+                                                    R
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-6 text-right">
-                                    <a class="btn btn-primary" href="{{route('bm.create')}}">Tambah Data</a>
+
                                 </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Data Pembelian Barang Masuk</h4>
                             </div>
                             
                             <div class="card-body">
@@ -129,6 +164,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </section>

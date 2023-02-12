@@ -6,6 +6,9 @@ use App\Models\Modal;
 use App\Models\Tenant;
 use App\Models\Penjualan;
 use App\Models\SumberNonCash;
+use App\Models\GajiKaryawan;
+use App\Models\Operasional;
+use App\Models\ListingFee;
 use Illuminate\Http\Request;
 use DB;
 
@@ -18,22 +21,72 @@ class ModalController extends Controller
      */
     public function index()
     {
-        $sb = SumberNonCash::select(DB::raw('SUM(nominal_bni) as `bni`, SUM(nominal_mandiri) as `mandiri\ovo`'),   
+        $sb = SumberNonCash::select(DB::raw('SUM(nominal_bni) as `bni`, SUM(nominal_mandiri) as `mandiri`'),   
                                     DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))
                                     ->groupby('year','month')
                                     ->get();
         
-        $penjualan = Penjualan::select();
+        $penjualan = Penjualan::select(DB::raw('SUM(nominal_penjualan) as penjualan, SUM(nominal_laba_rugi) as laba, SUM(nominal_modal_kasir) as kasir, SUM(nominal_kembalian_konsumen) as konsumen'),
+                                        DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))
+                                        ->groupby('year', 'month')
+                                        ->get();
+        
+                                        // dd($penjualan);
+                                        
+        $tenant = Tenant::all();
+        $fee = ListingFee::all();
+
+
+        $gaji = GajiKaryawan::all();
+        $operasional = Operasional::all();
+
         
         foreach($sb as $sumber){
-            $cek[] = $sumber->bni;
+            $cek[] = $sumber->mandiri + $sumber->bni;
         }
 
-        dd($cek, array_sum($cek));
+        foreach($penjualan as $pj){
+            $penj [] = $pj->penjualan - $pj->laba + $pj->kasir - $pj->konsumen;
+        }
+
+        foreach($tenant as $tn){
+            $ten[] = $tn->nominal;
+        }
+
+        foreach($gaji as $gj){
+            $gji[] = $gj->nominal;
+        }
+
+        foreach($operasional as $op){
+            $oper[] = $op->nominal;
+        }
+
+        foreach($fee as $f){
+            $lf[] = $f->nominal;
+        }
+
+        // Pemasukan
+        $jumlah_tenant = array_sum($ten);
+        $jumlah_cek = array_sum($cek);
+        $jumlah_penj = array_sum($penj);
+        $jumlah_fee = array_sum($lf);
+
+        $kas_masuk = $jumlah_cek + $jumlah_penj + $jumlah_tenant + $jumlah_fee;
+
+        // Pengeluaran
+        $jumlah_gaji = array_sum($gji);
+        $jumlah_operasional = array_sum($oper);
+
+        $kas_keluar = $jumlah_tenant + $jumlah_gaji;
 
 
-        $data = Tenant::all();
-        return view('contents.modal.index', compact('data'));
+
+        $total = $kas_masuk - $kas_keluar;
+        
+
+        
+        
+        return view('contents.modal.index', compact('kas_masuk','kas_keluar', 'total', 'sb', 'penjualan'));
     }
 
     /**
