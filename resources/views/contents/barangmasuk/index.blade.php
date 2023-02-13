@@ -40,7 +40,7 @@
                                     <h4>Total Transaksi</h4>
                                 </div>
                                 <div class="card-body">
-                                    10
+                                    {{$total}}
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                     <h4>Transaksi Selesai</h4>
                                 </div>
                                 <div class="card-body">
-                                    1,201
+                                    {{$total_lunas}}
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                                     <h4>Transaksi Berlangsung</h4>
                                 </div>
                                 <div class="card-body">
-                                    47
+                                    {{$total_kredit}}
                                 </div>
                             </div>
                         </div>
@@ -98,9 +98,9 @@
                                                 </th>
                                                 <th>Tanggal</th>
                                                 <th>Distributor</th>
-                                                <th>Harga</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                                <th class="text-right">Harga</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-right">Action</th>
                                             </tr>
                                         </thead>
                                         @php
@@ -112,24 +112,25 @@
                                             <td>
                                                 {{$no++}}
                                             </td>
-                                            <td>{{$item->tanggal}}</td>
+                                            <td>{{date('d F Y',strtotime($item->tanggal))}}</td>
                                             <td>
                                                 {{$item->nama_distributor}}
                                             </td>
-                                            <td>Rp. {{number_format($item->harga)}}</td>
+                                            <td class="text-right">Rp. {{number_format($item->harga)}}</td>
                                             @if ($item->status == 'Lunas')
-                                            <td>
+                                            <td class="text-center">
                                                 <div class="badge badge-success">Lunas</div>
                                             </td>
                                             @else
-                                            <td>
+                                            <td class="text-center">
                                                 <div class="badge badge-warning">On Kredit</div>
                                             </td>
                                             @endif
-                                            <td>
+                                            <td class="text-right">
                                                 {{-- <a href="#" class="btn btn-secondary">Detail</a> --}}
-                                                <a href="#" class="btn btn-info">Update</a>
-                                                <a href="#" class="btn btn-danger">Hapus</a>
+                                                {{-- <a href="#" class="btn btn-info">Update</a> --}}
+                                                <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#modalDelete_{{$item->id}}">Hapus</button>
+
                                             </td>
                                         </tr>
                                         @empty
@@ -149,6 +150,7 @@
                 </div>
             </div>
         </section>
+        @include('contents.barangmasuk.modal')  
     </div>
 @endsection
 

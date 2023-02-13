@@ -38,11 +38,10 @@ Route::controller(BarangMasukController::class)->group(function () {
     Route::get('/barang-masuk/all', 'index')->name('bm.index');
     Route::get('/barang-masuk/create', 'create')->name('bm.create');
     Route::post('/barang-masuk/store', 'store')->name('bm.store');
+    Route::put('/barang-masuk/update/{id}', 'updateData')->name('bm.update');
+    Route::delete('/barang-masuk/delete/{id}', 'destroy')->name('bm.delete');
 
     Route::get('/barang-kredit/all', 'barangKredit')->name('bmk.index');
-    // Route::get('/supplier/edit/{id}', 'SupplierEdit')->name('supplier.edit');
-    // Route::post('/supplier/update', 'SupplierUpdate')->name('supplier.update');
-    // Route::get('/supplier/delete/{id}', 'SupplierDelete')->name('supplier.delete');
     });
 
 // Operasional
