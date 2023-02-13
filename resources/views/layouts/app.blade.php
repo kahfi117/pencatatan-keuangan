@@ -54,6 +54,36 @@
             <!-- Content -->
             @yield('main')
 
+            {{-- modal logout --}}
+            <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Logout Sistem</h5>
+                      {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      </button> --}}
+                    </div>
+                    <form action="{{ route('logout') }}" method="post">
+                      @csrf
+                      <input type="hidden" name="id" id="id" value="">
+                      <div class="modal-body">
+                        Hi <b>{{ auth()->user()->name }}</b>, Yakin ingin mengakhiri sesi ini
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-info" data-dismiss="modal">
+                          <i class="bx bx-x d-block d-sm-none"></i>
+                          <span class="d-none d-sm-block">Tutup</span>
+                        </button>
+                        <button type="submit" class="btn btn-outline-danger ml-1" id="btn-save">
+                          <i class="bx bx-check d-block d-sm-none"></i>
+                          <span class="d-none d-sm-block">Yakin</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+
             <!-- Footer -->
             @include('components.footer')
         </div>
