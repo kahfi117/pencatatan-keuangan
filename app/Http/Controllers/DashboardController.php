@@ -28,19 +28,15 @@ class DashboardController extends Controller
 
         $barang = BarangMasuk::all();
 
-        // $barang_kredit = BarangMasuk::where('status', '=', 'On Kredit')->get();
+        $lunas = []; $harga = []; $kredit = [];
+        $pjl_penjualan = []; $pjl_kembalian_konsumen = []; $pjl_modal_kasir = []; $pjl_laba_rugi = [];
+        $lf = []; $cek = []; $ten = []; $gji = []; $oper = [];
 
         foreach($barang as $bl){
             $lunas[] = $bl->nominal_cash;
             $harga[] = $bl->harga;
             $kredit[] = $bl->nominal_kredit;
         }
-
-        // foreach($barang_kredit as $bk){
-        //     $kredit[] = $bk->nominal_kredit or null;
-        //     $harga_kredit[] = $bk->harga;
-        // }
-
         
 
         $jumlah_lunas = array_sum($lunas);
@@ -57,24 +53,34 @@ class DashboardController extends Controller
         }
 
         foreach($sb as $sumber){
-            $cek[] = $sumber->mandiri + $sumber->bni;
+            $cek[] = $sumber->nominal_mandiri + $sumber->nominal_bni;
         }
+
+        $jumlah_sumber_non_cash = array_sum($cek);
 
         foreach($tenant as $tn){
             $ten[] = $tn->nominal;
         }
 
+        $jumlah_tenant = array_sum($ten);
+
         foreach($gaji as $gj){
             $gji[] = $gj->nominal;
         }
+
+        $jumlah_gaji = array_sum($gji);
 
         foreach($operasional as $op){
             $oper[] = $op->nominal;
         }
 
+        $jumlah_operasional = array_sum($oper);
+
         foreach($fee as $f){
             $lf[] = $f->nominal;
         }
+
+        $jumlah_fee = array_sum($lf);
 
 
         $jumlah_penjualan = array_sum($pjl_penjualan);
@@ -87,6 +93,9 @@ class DashboardController extends Controller
 
 
 
-        return view('contents.dashboard',compact('total_penjualan', 'total_barang_masuk', 'jumlah_lunas', 'jumlah_kredit'));
+        return view('contents.dashboard',compact('total_penjualan', 
+        'total_barang_masuk', 'jumlah_lunas', 'jumlah_kredit', 
+        'jumlah_sumber_non_cash', 'jumlah_fee', 'jumlah_tenant',
+        'jumlah_tenant', 'jumlah_gaji', 'jumlah_operasional'));
     }
 }

@@ -39,10 +39,10 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>News</h4>
+                                <h4>Sumber Non Cash</h4>
                             </div>
                             <div class="card-body">
-                                42
+                                Rp.{{number_format($jumlah_sumber_non_cash,2,',','.')}}
                             </div>
                         </div>
                     </div>
@@ -54,10 +54,10 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Saldo Barang Masuk</h4>
+                                <h4>Listing Fee</h4>
                             </div>
                             <div class="card-body">
-                                Rp.{{number_format($total_penjualan,2,',','.')}}
+                                Rp.{{number_format($jumlah_fee,2,',','.')}}
                             </div>
                         </div>
                     </div>
@@ -103,6 +103,51 @@
                             </div>
                             <div class="card-body">
                                 Rp.{{number_format($jumlah_kredit,2,',','.')}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-danger">
+                            <i class="far fa-newspaper"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Sewa Tenant</h4>
+                            </div>
+                            <div class="card-body">
+                                Rp.{{number_format($jumlah_tenant,2,',','.')}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-danger">
+                            <i class="far fa-newspaper"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Gaji Karyawan</h4>
+                            </div>
+                            <div class="card-body">
+                                Rp.{{number_format($jumlah_gaji,2,',','.')}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-danger">
+                            <i class="far fa-newspaper"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Operasional Lainnya</h4>
+                            </div>
+                            <div class="card-body">
+                                Rp.{{number_format($jumlah_operasional,2,',','.')}}
                             </div>
                         </div>
                     </div>
