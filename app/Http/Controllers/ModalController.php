@@ -66,6 +66,10 @@ class ModalController extends Controller
                                             ->orderBy('month','ASC')
                                             ->get();
 
+        $ten = []; $penj = []; $cek = [];
+        $gji = []; $oper = []; $lf = [];
+
+        
         foreach($sb as $sumber){
             $cek[] = $sumber->mandiri + $sumber->bni;
         }

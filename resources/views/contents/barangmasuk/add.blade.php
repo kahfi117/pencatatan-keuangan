@@ -52,15 +52,15 @@
                                     <div class="col-sm-9">
                                         <select name="status" id="status" class="form-control" required>
                                             <option value="Lunas">Cash</option>
-                                            <option value="On Kredit">Kredit (If Credit Tambahkan Form Jumlah Bayar Awal)</option>
+                                            <option value="On Kredit">Kredit </option>
                                         </select>
                                     </div>
                                 </div>
 
-                                <div class="form-group row paid_kredit">
+                                <div class="form-group row" id="paid_kredit" style="display: none">
                                     <label for="nominal_kredit" class="col-sm-3 col-form-label">Total Bayar Awal</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="nominal_kredit" name="nominal_kredit">
+                                        <input type="number" class="form-control" id="nominal_kredit" name="nominal_kredit" placeholder="Tambahkan Jumlah Pembayaran Awal">
                                     </div>
                                 </div>
 
@@ -82,15 +82,16 @@
     <!-- JS Libraies -->
 
     <script>
-        $(document).('change', '#type_bayar', function(){
-            var type_bayar = $(this).val();
-
-            if (type_bayar == 'kredit') {
-                $('.paid_kredit').show();
-            }else{
-                $('.paid_kredit').hide();
-            }
-        });
+    $(document).on('change','#status', function(){
+        var paid_status = $(this).val();
+        if (paid_status == 'On Kredit') {
+            $('#paid_kredit').show();
+        }else{
+            $('#paid_kredit').hide();
+        }
+    });
     </script>
+
+
     <!-- Page Specific JS File -->
 @endpush
