@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use DB;
 
 class PenjualanController extends Controller
 {
@@ -16,7 +18,13 @@ class PenjualanController extends Controller
     {
         $data = Penjualan::all();
 
-        return view('contents.penjualan.index', compact('data'));
+        $date =  Penjualan::where('tanggal', '>', DB::raw('now() - interval 7 day'))->orderBy('tanggal')->get();
+        
+
+        // date('d-m-Y', strtotime($item->created_at))
+
+        
+        return view('contents.penjualan.index', compact('data', 'date'));
     }
 
     /**

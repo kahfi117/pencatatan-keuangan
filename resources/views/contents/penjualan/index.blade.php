@@ -13,6 +13,60 @@
 
     <link rel="stylesheet"
         href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}">
+    <style>
+        #container-hightcharts{
+            height: 400px;
+        }
+
+.highcharts-figure,
+.highcharts-data-table table {
+  min-width: 320px;
+  max-width: 800px;
+  margin: 1em auto;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #ebebeb;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.highcharts-data-table th {
+  font-weight: 600;
+  padding: 0.5em;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+  padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+    </style>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 @endpush
 
 @section('main')
@@ -107,11 +161,30 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <figure class="highcharts-figure">
+                                <div id="container-hightcharts"></div>
+                                <p class="highcharts-description">
+                                  Chart with buttons to modify options, showing how options can be changed
+                                  on the fly. This flexibility allows for more dynamic charts.
+                                </p>
+                              
+                                <button id="plain" class="btn btn-primary">Plain</button>
+                                <button id="inverted" class="btn btn-secondary">Inverted</button>
+                            </figure>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </section>
         @include('contents.penjualan.modal')
     </div>
+    <script>
+        var data = @json($date);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    </script>
 @endsection
 
 @push('scripts')
@@ -125,4 +198,69 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+    <script>
+        const chart = Highcharts.chart('container-hightcharts', {
+            title: {
+                text: 'Unemployment rates in engineering and ICT subjects, 2021',
+                align: 'left'
+            },
+            subtitle: {
+                text: 'Chart option: Plain | Source: ' +
+                '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
+                'target="_blank">NAV</a>',
+                align: 'left'
+            },
+            xAxis: {
+                categories: data.map(d => d.tanggal)
+            },
+        series: [{
+            type: 'column',
+            colorByPoint: false,
+            data: data.map(d => d.nominal_penjualan - d.nominal_laba_rugi + d.nominal_modal_kasir - d.nominal_kembalian_konsumen),
+            showInLegend: false
+        }]
+        });
+
+        document.getElementById('plain').addEventListener('click', () => {
+        chart.update({
+            chart: {
+            inverted: false,
+            polar: false
+            },
+            subtitle: {
+            text: 'Chart option: Plain | Source: ' +
+                '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
+                'target="_blank">NAV</a>'
+            }
+        });
+        });
+
+        document.getElementById('inverted').addEventListener('click', () => {
+        chart.update({
+            chart: {
+            inverted: true,
+            polar: false
+            },
+            subtitle: {
+            text: 'Chart option: Inverted | Source: ' +
+                '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
+                'target="_blank">NAV</a>'
+            }
+        });
+        });
+
+        document.getElementById('polar').addEventListener('click', () => {
+        chart.update({
+            chart: {
+            inverted: false,
+            polar: true
+            },
+            subtitle: {
+            text: 'Chart option: Polar | Source: ' +
+                '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
+                'target="_blank">NAV</a>'
+            }
+        });
+        });
+    </script>
 @endpush
