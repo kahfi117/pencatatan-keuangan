@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\BarangMasuk;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BarangMasukController extends Controller
 {
@@ -25,7 +26,19 @@ class BarangMasukController extends Controller
     }
 
     public function store(Request $request){
+       
         $id = $request->id;
+
+        $request->validate([
+            'nota' => 'mimes:jpeg,png,jpg',
+        ]);
+
+        
+        $nota = $request->file('nota');
+        $notaName = time().'.'.$nota->getClientOriginalExtension();
+        $nota->move(public_path('notas'), $notaName);
+
+
         if ($request->nominal_kredit == '') {
 
             BarangMasuk::updateOrCreate([
@@ -37,6 +50,7 @@ class BarangMasukController extends Controller
                 'nominal_cash' => $request->harga,
                 'status' => $request->status,
                 'nominal_kredit' => 0,
+                'nota' => $notaName
             ]);
         } else {
             $cash = $request->harga - $request->nominal_kredit;
@@ -49,6 +63,7 @@ class BarangMasukController extends Controller
                 'nominal_cash' => $request->nominal_kredit,
                 'status' => $request->status,
                 'nominal_kredit' => $cash,
+                'nota' => $notaName
             ]);
         }
         return redirect()->route('bm.index');

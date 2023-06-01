@@ -70,6 +70,33 @@
     </div>
 </div>
 
+{{-- Modal Bukti Bayar --}}
+
+<div class="modal fade" id="modalLihat_{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
+        </div>
+        <div class="modal-body">
+          <div class="card m-2"> 
+            <img src="{{ asset('notas/'.$item->nota) }}" alt="Gambar Nota" class="img-thumbnail">
+            <br>
+            <h6> Bukti Bayar </h6>
+            <p> Nama Distributor : {{ $item->nama_distributor }}
+              <br> Tanggal : {{ $item->tanggal }}
+              <br> Total : {{ $item->harga }}
+            </p>
+          </div>
+          <button type="button" class="btn btn-outline-info" data-dismiss="modal">
+            <i class="bx bx-x d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">Tutup</span>
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+
 @endisset
     
 @endforeach

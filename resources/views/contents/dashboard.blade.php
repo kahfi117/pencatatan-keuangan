@@ -8,6 +8,8 @@
         href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}">
+
+        @include('layouts.highcharts2')
 @endpush
 
 @section('main')
@@ -17,37 +19,38 @@
                 <h1>DASHBOARD</h1>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="far fa-user"></i>
-                        </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="card">
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Penjualan</h4>
+                                <h4 class="text-center">Total Penjualan</h4>
+                               
                             </div>
                             <div class="card-body">
-                                Rp.{{number_format($total_penjualan,2,',','.')}}
+                                <figure class="highcharts-figure">
+                                    <div id="penjualan"></div>
+                                </figure>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-danger">
-                            <i class="far fa-newspaper"></i>
-                        </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="card">
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Sumber Non Cash</h4>
+                                <h4 class="text-center">Pemasukan Lainnya</h4>
+                               
                             </div>
                             <div class="card-body">
-                                Rp.{{number_format($jumlah_sumber_non_cash,2,',','.')}}
+                                <figure class="highcharts-figure">
+                                    <div id="lainnya"></div>
+                                </figure>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                {{-- <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-warning">
                             <i class="far fa-file"></i>
@@ -151,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             {{-- <div class="row">
                 <div class="col-lg-8 col-md-12 col-12 col-sm-12">
@@ -280,4 +283,121 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/index-0.js') }}"></script>
+
+    {{-- Total Penjualan --}}
+    <script>
+
+        var categories = {!! $categories !!};
+        var data = {!! $data !!};
+
+        Highcharts.chart('penjualan', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Total Penjualan'
+        },
+        subtitle: {
+            text: 'Rp.{{number_format($total_penjualan,2,',','.')}}',
+        },
+        xAxis: {
+            categories: categories,
+            crosshair: true,
+            title : {
+                text:'Bulan'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Total Penjualan',
+            data: data
+
+            }],
+        });
+    </script>
+
+    {{-- Lainnya --}}
+    <script>
+
+        var categoriesLainnya = {!! $categories_lainnya !!};
+        var dataTenant = {!! $data_tenant !!};
+        var dataGaji = {!! $data_gaji !!};
+        var dataOperasional = {!! $data_operasional !!};
+        var dataListing = {!! $data_listing !!};
+
+        Highcharts.chart('lainnya', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Biaya Lainnya'
+        },
+        subtitle: {
+            text: 'Rp.{{number_format($jumlah_fee + $jumlah_tenant + $jumlah_gaji + $jumlah_operasional,2,',','.')}}',
+        },
+        xAxis: {
+            categories: categoriesLainnya,
+            crosshair: true,
+            title : {
+                text:'Bulan'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Total Penjualan',
+            data: dataTenant
+
+            }, {
+                name: 'Total Gaji',
+                data: dataGaji 
+            }, {
+                name: 'Total Operasional',
+                data: dataOperasional 
+            }, {
+                name: 'Total Listing Fee',
+                data: dataListing
+            }
+        ],
+        });
+    </script>
+
+    
 @endpush

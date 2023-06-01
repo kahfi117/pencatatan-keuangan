@@ -26,7 +26,7 @@
                             <div class="card-header">
                                 <h4>Buat Data Pemasukan Baru</h4>
                             </div>
-                            <form action="{{route('bm.store')}}" method="post">
+                            <form action="{{route('bm.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group row">
@@ -61,6 +61,13 @@
                                     <label for="nominal_kredit" class="col-sm-3 col-form-label">Total Bayar Awal</label>
                                     <div class="col-sm-9">
                                         <input type="number" class="form-control" id="nominal_kredit" name="nominal_kredit" placeholder="Tambahkan Jumlah Pembayaran Awal">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="nota" class="col-sm-3 col-form-label">Upload Nota</label>
+                                    <div class="col-sm-9">
+                                        <input type="file" class="form-control" id="nota" name="nota" placeholder="Upload Nota" required>
                                     </div>
                                 </div>
 

@@ -129,6 +129,7 @@
                                             <td class="text-right">
                                                 {{-- <a href="#" class="btn btn-secondary">Detail</a> --}}
                                                 {{-- <a href="#" class="btn btn-info">Update</a> --}}
+                                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalLihat_{{$item->id}}">Bukti Bayar</button>
                                                 <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#modalDelete_{{$item->id}}">Hapus</button>
 
                                             </td>
