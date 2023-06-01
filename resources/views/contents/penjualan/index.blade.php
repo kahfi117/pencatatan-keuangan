@@ -73,7 +73,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Pemasukan</h1>
+                <h1>Data Penjualan</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item">Data Pemasukan</div>
@@ -93,7 +93,6 @@
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 text-right">
                                         <a class="btn btn-primary text-center" href="{{route('penjualan.create')}}">Tambah Data Penjualan</a>
-                                        <button class="btn btn-secondary text-center" type="button" data-toggle="modal" data-target="#modal_laporan">Buat Laporan</button>
                                     </div>
                                 
                             </div>
@@ -166,8 +165,8 @@
                             <figure class="highcharts-figure">
                                 <div id="container-hightcharts"></div>
                                 <p class="highcharts-description">
-                                  Chart with buttons to modify options, showing how options can be changed
-                                  on the fly. This flexibility allows for more dynamic charts.
+                                  Berikut adalah grafik penjualan selama satu minggu
+                                  pada toko Macca Mart, untuk melihat hasil penjualan perhari.
                                 </p>
                               
                                 <button id="plain" class="btn btn-primary">Plain</button>
@@ -201,7 +200,7 @@
     <script>
         const chart = Highcharts.chart('container-hightcharts', {
             title: {
-                text: 'Unemployment rates in engineering and ICT subjects, 2021',
+                text: 'GRAFIK PENJUALAN',
                 align: 'left'
             },
             subtitle: {
